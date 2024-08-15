@@ -124,7 +124,7 @@ h2 {
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 220%);
+            background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0,0,0,0.3) 220%);
             transform: translateY(25px);
             transition: transform 0.3s ease;
         }
@@ -132,8 +132,9 @@ h2 {
             transform: translateY(0);
         }
         .blog-post h3 {
-            margin: 0 0 10px;
+            margin: 0 0 12px;
             font-size: 1.2em;
+            color:white
         }
         .blog-post p {
             margin: 0;
@@ -294,7 +295,7 @@ h2 {
         <div class="tab-container">
             <button class="tab active" onclick="showContent('blog')">Blog Posts</button>
             <button class="tab" onclick="showContent('github')">Github</button>
-            <button class="tab" onclick="showContent('extracurricular')">Extracurricullar</button>
+            <button class="tab" onclick="showContent('extra')">Extra</button>
 
 
         </div>
@@ -309,14 +310,13 @@ h2 {
             <div id="github-projects" class="github-projects">
                 <!-- GitHub projects will be dynamically loaded here -->
             </div>
-            <div id="extracurricular-content" class="content-container">
-                <h2>Extracurricular Activities</h2>
-                <div id="extracurricular-activities" class="extracurricular-activities">
-
-                    <p>'Member of the AI Club at XYZ University'</p>
+        </div>
+        <div id="extra-content" class="content-container">
+            <h2>Youtube Content</h2>
+            <div id="extra-posts" class="extra-posts">
+                <!-- Youtube will be dynamically loaded here -->
             </div>
         </div>
-    
     </div>
 
     <script>
@@ -457,22 +457,6 @@ h2 {
             });
         }
 
-        function loadExtracurricularActivities() {
-        const extracurricularActivities = [
-            'Member of the AI Club at XYZ University',
-            'Volunteer at ABC Non-Profit Organization',
-            'Organizer of the DEF Hackathon',
-            'Participant in various coding competitions'
-        ];
-
-        const extracurricularContainer = document.getElementById('extracurricular-activities');
-        extracurricularActivities.forEach(activity => {
-            const activityItem = document.createElement('p');
-            activityItem.textContent = activity;
-            extracurricularContainer.appendChild(activityItem);
-        });
-    }
-
         function showContent(contentType) {
             const tabs = document.querySelectorAll('.tab');
             const contentContainers = document.querySelectorAll('.content-container');
@@ -486,7 +470,6 @@ h2 {
 
         // Load Medium posts and GitHub projects when the page is ready
         document.addEventListener('DOMContentLoaded', () => {
-            loadExtracurricularActivities();
             loadGithubProjects();
             
         });
