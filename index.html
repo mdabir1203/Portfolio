@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohammad Abir Abbas | AI Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Payday', Roboto sans-serif;
+            background-color: #2b8080;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding-top: 80px;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow:hidden;
+            position: absolute;
+            top: -90px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .profile-pic:hover {
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.alias {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+h2 {
+    font-size: 1.8em;
+    margin-top: 0;
+    color: #ffffff; /* A complementary color to the background */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+        .content-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+        }
+        .skills-section {
+            width: 45%;
+        }
+        .skill-graph {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+        }
+        .bio-section {
+            width: 45%;
+            text-align: left;
+        }
+        .blog-section {
+            width: 100%;
+            margin-top: 40px;
+        }
+        .blog-posts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .blog-post {
+            width: 275px;
+            height: 275px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+        .blog-post-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 70%;
+            height: 70%;
+            padding: 5px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 220%);
+            transform: translateY(25px);
+            transition: transform 0.3s ease;
+        }
+        .blog-post:hover .blog-post-content {
+            transform: translateY(0);
+        }
+        .blog-post h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+        .blog-post p {
+            margin: 0;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        .skill-label, .skill-value {
+            font-family: 'Roboto', Arial, sans-serif;
+            fill: white;
+            font-weight: bold;
+        }
+        .skill-label {
+            font-size: 12px;
+        }
+        .skill-value {
+            font-size: 14px;
+        }
+        
+              .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .tab.active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .tab:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .content-container {
+            display: none;
+        }
+        .content-container.active {
+            display: block;
+        }
+        .github-projects {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .github-project {
+            width: 300px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+        }
+        .github-project:hover {
+            transform: translateY(-5px);
+        }
+        .github-project h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+        }
+        .github-project p {
+            margin: 0;
+            font-size: 0.9em;
+            flex-grow: 1;
+        }
+        .github-project-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .github-stars {
+            display: flex;
+            align-items: center;
+        }
+        .github-stars::before {
+            content: "★";
+            margin-right: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-section">
+            <div class="profile-pic">
+                <img src="propic2.jpg" alt="">
+            </div>
+            <h1>Mohammad Abir Abbas</h1>
+            <div class="alias">aka uknowWho</div>
+            <h2>AI Developer</h2>
+        </div>
+        <div class="content-section">
+            <div class="skills-section">
+                <svg class="skill-graph" viewBox="0 0 300 300">
+                    <defs>
+                        <radialGradient id="skillGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                            <stop offset="0%" style="stop-color:white;stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:white;stop-opacity:0" />
+                        </radialGradient>
+                    </defs>
+                    
+                    <!-- Web lines -->
+                    <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(255,255,255,0.2)" />
+                    <circle cx="150" cy="150" r="90" fill="none" stroke="rgba(255,255,255,0.2)" />
+                    <circle cx="150" cy="150" r="60" fill="none" stroke="rgba(255,255,255,0.2)" />
+                    <circle cx="150" cy="150" r="30" fill="none" stroke="rgba(255,255,255,0.2)" />
+                    
+                    <!-- Skill lines -->
+                    <line x1="150" y1="150" x2="150" y2="30" stroke="rgba(255,255,255,0.2)" />
+                    <line x1="150" y1="150" x2="259.8" y2="150" stroke="rgba(255,255,255,0.2)" />
+                    <line x1="150" y1="150" x2="205" y2="259.8" stroke="rgba(255,255,255,0.2)" />
+                    <line x1="150" y1="150" x2="95" y2="259.8" stroke="rgba(255,255,255,0.2)" />
+                    <line x1="150" y1="150" x2="40.2" y2="150" stroke="rgba(255,255,255,0.2)" />
+                    
+                    <!-- Skill areas -->
+                    <path class="skill-area" d="M150,150 L150,40 A110,110 0 0,1 259.8,150 Z" fill="transparent" />
+                    <path class="skill-area" d="M150,150 L259.8,150 A110,110 0 0,1 205,259.8 Z" fill="transparent" />
+                    <path class="skill-area" d="M150,150 L205,259.8 A110,110 0 0,1 95,259.8 Z" fill="transparent" />
+                    <path class="skill-area" d="M150,150 L95,259.8 A110,110 0 0,1 40.2,150 Z" fill="transparent" />
+                    <path class="skill-area" d="M150,150 L40.2,150 A110,110 0 0,1 150,40 Z" fill="transparent" />
+                    
+                    <!-- Skill points -->
+                    <polygon points="150,40 259.8,150 205,259.8 95,259.8 40.2,150" fill="url(#skillGradient)" stroke="white" />
+                    
+                    <!-- Skill labels and values -->
+                    <text x="150" y="20" text-anchor="middle" class="skill-label">AI</text>
+                    <text x="150" y="40" text-anchor="middle" class="skill-value">95%</text>
+                    
+                    <text x="270" y="155" text-anchor="start" class="skill-label">Rust</text>
+                    <text x="270" y="175" text-anchor="start" class="skill-value">80%</text>
+                    
+                    <text x="220" y="270" text-anchor="middle" class="skill-label">Analytical Thinking</text>
+                    <text x="220" y="290" text-anchor="middle" class="skill-value">90%</text>
+                    
+                    <text x="80" y="270" text-anchor="middle" class="skill-label">Critical Thinking</text>
+                    <text x="80" y="290" text-anchor="middle" class="skill-value">85%</text>
+                    
+                    <text x="30" y="155" text-anchor="end" class="skill-label">OOP</text>
+                    <text x="30" y="175" text-anchor="end" class="skill-value">75%</text>
+                </svg>
+            </div>
+            <div class="bio-section">
+                <h2>About Me</h2>
+                <p>
+                    As a passionate AI Developer, I thrive on creating innovative solutions that push the boundaries of what's possible. My approach to AI development is deeply rooted in collaboration and empathy, recognizing that the best AI systems are those that truly understand and serve human needs.
+                </p>
+            </div>
+        </div>
+        <div class="tab-container">
+            <button class="tab active" onclick="showContent('blog')">Blog Posts</button>
+            <button class="tab" onclick="showContent('github')">Github</button>
+            <button class="tab" onclick="showContent('extracurricular')">Extracurricullar</button>
+
+
+        </div>
+        <div id="blog-content" class="content-container active">
+            <h2>Technical Content</h2>
+            <div id="blog-posts" class="blog-posts">
+                <!-- Blog posts will be dynamically loaded here -->
+            </div>
+        </div>
+        <div id="github-content" class="content-container">
+            <h2>Projects</h2>
+            <div id="github-projects" class="github-projects">
+                <!-- GitHub projects will be dynamically loaded here -->
+            </div>
+            <div id="extracurricular-content" class="content-container">
+                <h2>Extracurricular Activities</h2>
+                <div id="extracurricular-activities" class="extracurricular-activities">
+
+                    <p>'Member of the AI Club at XYZ University'</p>
+            </div>
+        </div>
+    
+    </div>
+
+    <script>
+        // Replace 'YOUR_MEDIUM_USERNAME' with your actual Medium username
+        const mediumUsername = 'md.abir1203';
+        const mediumRssFeed = `https://medium.com/feed/@${mediumUsername}`;
+        const rssToJsonApi = `https://api.rss2json.com/v1/api.json?rss_url=${mediumRssFeed}`;
+
+        async function fetchMediumPosts() {
+            try {
+                const response = await fetch(rssToJsonApi);
+                const data = await response.json();
+                return data.items.slice(0, 3); // Get the latest 3 posts
+            } catch (error) {
+                console.error('Error fetching Medium posts:', error);
+                return [];
+            }
+        }
+
+        function createBlogPostElement(post) {
+            const blogPost = document.createElement('a');
+            blogPost.href = post.link;
+            blogPost.target = '_blank';
+            blogPost.className = 'blog-post';
+            blogPost.style.backgroundImage = `url('${post.thumbnail}')`;
+            blogPost.style.backgroundSize = 'cover';
+            blogPost.style.backgroundPosition = 'center';
+
+            const content = document.createElement('div');
+            content.className = 'blog-post-content';
+
+            const title = document.createElement('h3');
+            title.textContent = post.title;
+
+            const description = document.createElement('p');
+            description.textContent = post.description.replace(/<\/?[^>]+(>|$)/g, "").slice(0, 100) + '...';
+
+            content.appendChild(title);
+            content.appendChild(description);
+            blogPost.appendChild(content);
+
+            return blogPost;
+        }
+
+        async function loadMediumPosts() {
+            const blogPostsContainer = document.getElementById('blog-posts');
+            const posts = await fetchMediumPosts();
+
+            posts.forEach(post => {
+                const blogPostElement = createBlogPostElement(post);
+                blogPostsContainer.appendChild(blogPostElement);
+            });
+        }
+
+        // Load Medium posts when the page is ready
+        document.addEventListener('DOMContentLoaded', loadMediumPosts);
+        
+        // GitHub API integration
+        const githubUsername = 'mdabir1203'; // Replace with your GitHub username
+        const githubApiUrl = 'https://api.github.com/graphql';
+
+        async function fetchGithubProjects() {
+            
+            const query = `
+    {
+      user(login: "${githubUsername}") {
+        pinnedItems(first: 6, types: REPOSITORY) {
+          nodes {
+            ... on Repository {
+              name
+              description
+              url
+              stargazerCount
+            }
+          }
+        }
+      }
+    }
+    `;
+                  
+            try {
+                const response = await fetch(githubApiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer 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' // Replace with your GitHub personal access token
+            },
+            body: JSON.stringify({ query })
+        });
+        const data = await response.json();
+        console.log('Full API Response:', data);
+        return data.data.user.pinnedItems.nodes;
+            } catch (error) {
+                console.error('Error fetching GitHub projects:', error);
+                return [];
+            }
+        }
+
+        function createGithubProjectElement(project) {
+            const projectElement = document.createElement('div');
+            projectElement.className = 'github-project';
+
+            const title = document.createElement('h3');
+            title.textContent = project.name;
+
+            const description = document.createElement('p');
+            description.textContent = project.description || 'No description available';
+
+            const footer = document.createElement('div');
+            footer.className = 'github-project-footer';
+
+            const stars = document.createElement('span');
+            stars.className = 'github-stars';
+            stars.textContent = project.stargazerCount;
+
+            const link = document.createElement('a');
+            link.href = project.url;
+            link.target = '_blank';
+            link.textContent = 'View on GitHub';
+
+            footer.appendChild(stars);
+            footer.appendChild(link);
+
+            projectElement.appendChild(title);
+            projectElement.appendChild(description);
+            projectElement.appendChild(footer);
+
+            return projectElement;
+        }
+
+        async function loadGithubProjects() {
+            const githubProjectsContainer = document.getElementById('github-projects');
+            const projects = await fetchGithubProjects();
+
+            projects.forEach(project => {
+                const projectElement = createGithubProjectElement(project);
+                githubProjectsContainer.appendChild(projectElement);
+            });
+        }
+
+        function loadExtracurricularActivities() {
+        const extracurricularActivities = [
+            'Member of the AI Club at XYZ University',
+            'Volunteer at ABC Non-Profit Organization',
+            'Organizer of the DEF Hackathon',
+            'Participant in various coding competitions'
+        ];
+
+        const extracurricularContainer = document.getElementById('extracurricular-activities');
+        extracurricularActivities.forEach(activity => {
+            const activityItem = document.createElement('p');
+            activityItem.textContent = activity;
+            extracurricularContainer.appendChild(activityItem);
+        });
+    }
+
+        function showContent(contentType) {
+            const tabs = document.querySelectorAll('.tab');
+            const contentContainers = document.querySelectorAll('.content-container');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            contentContainers.forEach(container => container.classList.remove('active'));
+
+            document.querySelector(`.tab:nth-child(${contentType === 'blog' ? '1' : '2'})`).classList.add('active');
+            document.getElementById(`${contentType}-content`).classList.add('active');
+        }
+
+        // Load Medium posts and GitHub projects when the page is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            loadExtracurricularActivities();
+            loadGithubProjects();
+            
+        });
+    </script>
+</body>
+</html>
