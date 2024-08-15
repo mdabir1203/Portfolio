@@ -223,6 +223,65 @@ h2 {
             margin-right: 5px;
         }
 
+    .youtube-videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    }
+
+    .youtube-video {
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 2px solid #004d4d;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 4px 4px 0 #004d4d;
+    }
+
+    .youtube-video:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0 #004d4d;
+    }
+
+    .youtube-video img {
+        width: 100%;
+        height: 158px;
+        object-fit: cover;
+        border-bottom: 2px solid #004d4d;
+    }
+
+    .youtube-video-content {
+        padding: 15px;
+    }
+
+    .youtube-video h3 {
+        margin: 0 0 10px;
+        font-size: 1em;
+        font-weight: 700;
+        color: #004d4d;
+        font-family: 'Courier New', monospace;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .youtube-video p {
+        margin: 0;
+        font-size: 0.8em;
+        color: #006666;
+        font-family: 'Arial', sans-serif;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+        .youtube-videos {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+    }
+
     </style>
 </head>
 <body>
@@ -296,8 +355,6 @@ h2 {
             <button class="tab active" onclick="showContent('blog')">Blog Posts</button>
             <button class="tab" onclick="showContent('github')">Github</button>
             <button class="tab" onclick="showContent('extra')">Extra</button>
-
-
         </div>
         <div id="blog-content" class="content-container active">
             <h2>Technical Content</h2>
@@ -312,12 +369,11 @@ h2 {
             </div>
         </div>
         <div id="extra-content" class="content-container">
-            <h2>Youtube Content</h2>
-            <div id="extra-posts" class="extra-posts">
-                <!-- Youtube will be dynamically loaded here -->
+            <h2>YouTube Content</h2>
+            <div id="youtube-videos" class="youtube-videos">
+                <!-- YouTube videos will be dynamically loaded here -->
             </div>
         </div>
-    </div>
 
     <script>
         // Replace 'YOUR_MEDIUM_USERNAME' with your actual Medium username
@@ -457,6 +513,63 @@ h2 {
             });
         }
 
+        const youtubeChannelId = 'UCPM3MAgkXUOFSfysJuAvthQ'; // Replace with your YouTube channel ID
+        const youtubeApiKey = 'AIzaSyBYbEaXYVgRd5zQYNY9gswsqAOzu2E3YDU'; // Replace with your YouTube API key
+        const youtubeApiUrl = `https://www.googleapis.com/youtube/v3/search?key=${youtubeApiKey}&channelId=${youtubeChannelId}&part=snippet,id&order=date&maxResults=6`;
+
+        async function fetchYoutubeVideos() {
+            try {
+                const response = await fetch(youtubeApiUrl);
+                const data = await response.json();
+                return data.items;
+            } catch (error) {
+                console.error('Error fetching YouTube videos:', error);
+                return [];
+            }
+        }
+
+        function createYoutubeVideoElement(video) {
+            const videoElement = document.createElement('div');
+            videoElement.className = 'youtube-video';
+
+            const thumbnail = document.createElement('img');
+            thumbnail.src = video.snippet.thumbnails.medium.url;
+            thumbnail.alt = video.snippet.title;
+
+            const content = document.createElement('div');
+            content.className = 'youtube-video-content';
+
+            const title = document.createElement('h3');
+            title.textContent = video.snippet.title;
+
+            const description = document.createElement('p');
+            description.textContent = video.snippet.description.slice(0, 100) + '...';
+
+            content.appendChild(title);
+            content.appendChild(description);
+
+            videoElement.appendChild(thumbnail);
+            videoElement.appendChild(content);
+
+            videoElement.addEventListener('click', () => {
+                window.open(`https://www.youtube.com/watch?v=${video.id.videoId}`, '_blank');
+            });
+
+            return videoElement;
+        }
+
+        async function loadYoutubeVideos() {
+            const youtubeVideosContainer = document.getElementById('youtube-videos');
+            const videos = await fetchYoutubeVideos();
+
+            videos.forEach(video => {
+                const videoElement = createYoutubeVideoElement(video);
+                youtubeVideosContainer.appendChild(videoElement);
+            });
+        }
+
+// Show the content of the tab
+
         function showContent(contentType) {
             const tabs = document.querySelectorAll('.tab');
             const contentContainers = document.querySelectorAll('.content-container');
@@ -471,6 +584,7 @@ h2 {
         // Load Medium posts and GitHub projects when the page is ready
         document.addEventListener('DOMContentLoaded', () => {
             loadGithubProjects();
+            loadYoutubeVideos();
             
         });
     </script>
